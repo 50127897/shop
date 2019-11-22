@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.CommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Comments" >
+    <id column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="CTIME" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="CDETAIL" property="cdetail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CID, PID, USERID, CTIME, CDETAIL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.CommentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from COMMENTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from COMMENTS
+    where CID = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from COMMENTS
+    where CID = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.CommentsExample" >
+    delete from COMMENTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Comments" >
+    insert into COMMENTS (CID, PID, USERID, 
+      CTIME, CDETAIL)
+    values (#{cid,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{cdetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Comments" >
+    insert into COMMENTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="ctime != null" >
+        CTIME,
+      </if>
+      <if test="cdetail != null" >
+        CDETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdetail != null" >
+        #{cdetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.CommentsExample" resultType="java.lang.Integer" >
+    select count(*) from COMMENTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update COMMENTS
+    <set >
+      <if test="record.cid != null" >
+        CID = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null" >
+        CTIME = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cdetail != null" >
+        CDETAIL = #{record.cdetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update COMMENTS
+    set CID = #{record.cid,jdbcType=VARCHAR},
+      PID = #{record.pid,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR},
+      CTIME = #{record.ctime,jdbcType=TIMESTAMP},
+      CDETAIL = #{record.cdetail,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Comments" >
+    update COMMENTS
+    <set >
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        CTIME = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdetail != null" >
+        CDETAIL = #{cdetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Comments" >
+    update COMMENTS
+    set PID = #{pid,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      CTIME = #{ctime,jdbcType=TIMESTAMP},
+      CDETAIL = #{cdetail,jdbcType=VARCHAR}
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+  
+   
+   <!-- 评价对应图片映射 2019-8-2 -->
+   <resultMap id="comment_Image_Map" type="com.shop.pojo.Comments" >
+	    <id column="CID" property="cid" jdbcType="VARCHAR" />
+		    <result column="PID" property="pid" jdbcType="VARCHAR" />
+		    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+		    <result column="CTIME" property="ctime" jdbcType="TIMESTAMP" />
+		    <result column="CDETAIL" property="cdetail" jdbcType="VARCHAR" />
+	   
+	    <!-- 一个评价对应多张评价图片 -->
+		<!--  ImageComments 是 Comments的属性-->
+		<collection property="imageComments" ofType="com.shop.pojo.ImageComment">
+			<id column="IP_ID" property="ipId" jdbcType="DECIMAL" />
+			    <result column="CID" property="cid" jdbcType="VARCHAR" />
+			    <result column="IC_ROUTE" property="icRoute" jdbcType="VARCHAR" />
+		</collection>
+  </resultMap>
+  
+  	<!-- 根据商品ID查询所有评价的详细信息[带图片] 2019-8-2 -->
+  	<select id="selectCommentWithImageByPid" parameterType="java.lang.String" resultMap="comment_Image_Map">
+		SELECT
+			c.CID,
+			c.PID,
+			c.USERID,
+			c.CTIME,
+			c.CDETAIL,
+			cimage.IP_ID,
+			cimage.CID,
+			cimage.IC_ROUTE
+		FROM
+			COMMENTS c
+			LEFT JOIN IMAGE_COMMENT cimage
+			ON c.CID = cimage.CID
+		WHERE
+			c.PID = #{pid}
+		ORDER BY c.CTIME DESC
+	</select>
+  
+</mapper>

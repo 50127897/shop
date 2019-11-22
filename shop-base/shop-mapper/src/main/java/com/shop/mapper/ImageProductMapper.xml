@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.ImageProductMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.ImageProduct" >
+    <id column="IP_ID" property="ipId" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="IP_ROUTE" property="ipRoute" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    IP_ID, PID, IP_ROUTE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.ImageProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from IMAGE_PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IMAGE_PRODUCT
+    where IP_ID = #{ipId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IMAGE_PRODUCT
+    where IP_ID = #{ipId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.ImageProductExample" >
+    delete from IMAGE_PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.ImageProduct" >
+    insert into IMAGE_PRODUCT (IP_ID, PID, IP_ROUTE
+      )
+    values (#{ipId,jdbcType=DECIMAL}, #{pid,jdbcType=VARCHAR}, #{ipRoute,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.ImageProduct" >
+    insert into IMAGE_PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ipId != null" >
+        IP_ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="ipRoute != null" >
+        IP_ROUTE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ipId != null" >
+        #{ipId,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipRoute != null" >
+        #{ipRoute,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.ImageProductExample" resultType="java.lang.Integer" >
+    select count(*) from IMAGE_PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update IMAGE_PRODUCT
+    <set >
+      <if test="record.ipId != null" >
+        IP_ID = #{record.ipId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipRoute != null" >
+        IP_ROUTE = #{record.ipRoute,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update IMAGE_PRODUCT
+    set IP_ID = #{record.ipId,jdbcType=DECIMAL},
+      PID = #{record.pid,jdbcType=VARCHAR},
+      IP_ROUTE = #{record.ipRoute,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.ImageProduct" >
+    update IMAGE_PRODUCT
+    <set >
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipRoute != null" >
+        IP_ROUTE = #{ipRoute,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IP_ID = #{ipId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.ImageProduct" >
+    update IMAGE_PRODUCT
+    set PID = #{pid,jdbcType=VARCHAR},
+      IP_ROUTE = #{ipRoute,jdbcType=VARCHAR}
+    where IP_ID = #{ipId,jdbcType=DECIMAL}
+  </update>
+</mapper>

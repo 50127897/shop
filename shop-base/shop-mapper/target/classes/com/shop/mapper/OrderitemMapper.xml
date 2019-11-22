@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.OrderitemMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Orderitem" >
+    <id column="OI_ID" property="oiId" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+    <result column="OI_TOTAL" property="oiTotal" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="COMMENTFLAG" property="commentflag" jdbcType="VARCHAR" />
+    <result column="PRODUCTSPEC" property="productspec" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OI_ID, QUANTITY, OI_TOTAL, PID, ORDERID, COMMENTFLAG, PRODUCTSPEC
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.OrderitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORDERITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORDERITEM
+    where OI_ID = #{oiId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORDERITEM
+    where OI_ID = #{oiId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.OrderitemExample" >
+    delete from ORDERITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Orderitem" >
+    insert into ORDERITEM (OI_ID, QUANTITY, OI_TOTAL, 
+      PID, ORDERID, COMMENTFLAG, 
+      PRODUCTSPEC)
+    values (#{oiId,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL}, #{oiTotal,jdbcType=DECIMAL}, 
+      #{pid,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, #{commentflag,jdbcType=VARCHAR}, 
+      #{productspec,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Orderitem" >
+    insert into ORDERITEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oiId != null" >
+        OI_ID,
+      </if>
+      <if test="quantity != null" >
+        QUANTITY,
+      </if>
+      <if test="oiTotal != null" >
+        OI_TOTAL,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="commentflag != null" >
+        COMMENTFLAG,
+      </if>
+      <if test="productspec != null" >
+        PRODUCTSPEC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oiId != null" >
+        #{oiId,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="oiTotal != null" >
+        #{oiTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="commentflag != null" >
+        #{commentflag,jdbcType=VARCHAR},
+      </if>
+      <if test="productspec != null" >
+        #{productspec,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.OrderitemExample" resultType="java.lang.Integer" >
+    select count(*) from ORDERITEM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORDERITEM
+    <set >
+      <if test="record.oiId != null" >
+        OI_ID = #{record.oiId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null" >
+        QUANTITY = #{record.quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oiTotal != null" >
+        OI_TOTAL = #{record.oiTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentflag != null" >
+        COMMENTFLAG = #{record.commentflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productspec != null" >
+        PRODUCTSPEC = #{record.productspec,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORDERITEM
+    set OI_ID = #{record.oiId,jdbcType=VARCHAR},
+      QUANTITY = #{record.quantity,jdbcType=DECIMAL},
+      OI_TOTAL = #{record.oiTotal,jdbcType=DECIMAL},
+      PID = #{record.pid,jdbcType=VARCHAR},
+      ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      COMMENTFLAG = #{record.commentflag,jdbcType=VARCHAR},
+      PRODUCTSPEC = #{record.productspec,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Orderitem" >
+    update ORDERITEM
+    <set >
+      <if test="quantity != null" >
+        QUANTITY = #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="oiTotal != null" >
+        OI_TOTAL = #{oiTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="commentflag != null" >
+        COMMENTFLAG = #{commentflag,jdbcType=VARCHAR},
+      </if>
+      <if test="productspec != null" >
+        PRODUCTSPEC = #{productspec,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OI_ID = #{oiId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Orderitem" >
+    update ORDERITEM
+    set QUANTITY = #{quantity,jdbcType=DECIMAL},
+      OI_TOTAL = #{oiTotal,jdbcType=DECIMAL},
+      PID = #{pid,jdbcType=VARCHAR},
+      ORDERID = #{orderid,jdbcType=VARCHAR},
+      COMMENTFLAG = #{commentflag,jdbcType=VARCHAR},
+      PRODUCTSPEC = #{productspec,jdbcType=VARCHAR}
+    where OI_ID = #{oiId,jdbcType=VARCHAR}
+  </update>
+</mapper>

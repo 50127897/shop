@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.OrderssMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Orderss" >
+    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="ORDERTIME" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+    <result column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDERID, ORDERTIME, TOTAL, ORDERSTATE, TD_ID, USERID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.OrderssExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORDERSS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORDERSS
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORDERSS
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.OrderssExample" >
+    delete from ORDERSS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Orderss" >
+    insert into ORDERSS (ORDERID, ORDERTIME, TOTAL, 
+      ORDERSTATE, TD_ID, USERID
+      )
+    values (#{orderid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{total,jdbcType=DECIMAL}, 
+      #{orderstate,jdbcType=DECIMAL}, #{tdId,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Orderss" >
+    insert into ORDERSS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="ordertime != null" >
+        ORDERTIME,
+      </if>
+      <if test="total != null" >
+        TOTAL,
+      </if>
+      <if test="orderstate != null" >
+        ORDERSTATE,
+      </if>
+      <if test="tdId != null" >
+        TD_ID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstate != null" >
+        #{orderstate,jdbcType=DECIMAL},
+      </if>
+      <if test="tdId != null" >
+        #{tdId,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.OrderssExample" resultType="java.lang.Integer" >
+    select count(*) from ORDERSS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORDERSS
+    <set >
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordertime != null" >
+        ORDERTIME = #{record.ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.total != null" >
+        TOTAL = #{record.total,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderstate != null" >
+        ORDERSTATE = #{record.orderstate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tdId != null" >
+        TD_ID = #{record.tdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORDERSS
+    set ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      ORDERTIME = #{record.ordertime,jdbcType=TIMESTAMP},
+      TOTAL = #{record.total,jdbcType=DECIMAL},
+      ORDERSTATE = #{record.orderstate,jdbcType=DECIMAL},
+      TD_ID = #{record.tdId,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Orderss" >
+    update ORDERSS
+    <set >
+      <if test="ordertime != null" >
+        ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        TOTAL = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstate != null" >
+        ORDERSTATE = #{orderstate,jdbcType=DECIMAL},
+      </if>
+      <if test="tdId != null" >
+        TD_ID = #{tdId,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Orderss" >
+    update ORDERSS
+    set ORDERTIME = #{ordertime,jdbcType=TIMESTAMP},
+      TOTAL = #{total,jdbcType=DECIMAL},
+      ORDERSTATE = #{orderstate,jdbcType=DECIMAL},
+      TD_ID = #{tdId,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR}
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  
+  
+	<!-- ====== 获得一个用户的所有订单信息 - 返回一个用户 =====-->
+    <!-- 获取用户的订单 2019-8-8-->
+    <resultMap id="user_order_orderitem_product" type="com.shop.pojo.Users" >
+		<id column="USERID" property="userid" jdbcType="VARCHAR" />
+		    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		    <result column="PASSWD" property="passwd" jdbcType="VARCHAR" />
+		    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+		    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+		    <result column="STATE" property="state" jdbcType="DECIMAL" />
+		    <result column="CODE" property="code" jdbcType="VARCHAR" />
+		    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+			
+			<!-- 一个用户对应多份订单 -->
+			<collection property="orderList" ofType="com.shop.pojo.Orderss">
+				<id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+				    <result column="ORDERTIME" property="ordertime" jdbcType="TIMESTAMP" />
+				    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+				    <result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+				    <result column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+				    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+				    
+				    <!-- 一个订单对应一份收货信息 -->
+				    <association  property="takeDelivery" javaType="com.shop.pojo.TakeDelivery">
+						<id column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+						    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+						    <result column="TD_NAME" property="tdName" jdbcType="VARCHAR" />
+						    <result column="TD_ADDRESS" property="tdAddress" jdbcType="VARCHAR" />
+						    <result column="TD_TELEPHONE" property="tdTelephone" jdbcType="VARCHAR" />
+						    <result column="TDSTATE" property="tdstate" jdbcType="VARCHAR" />
+					</association >
+				    
+				    <!-- 一个订单对应多个子项订单 -->
+				    <collection property="orderItemList" ofType="com.shop.pojo.Orderitem">
+						 <id column="OI_ID" property="oiId" jdbcType="VARCHAR" />
+						    <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+						    <result column="OI_TOTAL" property="oiTotal" jdbcType="DECIMAL" />
+						    <result column="PID" property="pid" jdbcType="VARCHAR" />
+						    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+						    <result column="COMMENTFLAG" property="commentflag" jdbcType="VARCHAR" />
+						    <result column="PRODUCTSPEC" property="productspec" jdbcType="VARCHAR" />
+				    		
+				    		<!-- 一个订单子项对应一份商品 -->
+				    		<association  property="producItem" javaType="com.shop.pojo.Product">
+						    	<id column="PID" property="pid" jdbcType="VARCHAR" />
+								    <result column="PNAME" property="pname" jdbcType="VARCHAR" />
+								    <result column="SHOP_PRICE" property="shopPrice" jdbcType="DECIMAL" />
+								    <result column="MARKET_PRICE" property="marketPrice" jdbcType="DECIMAL" />
+								    <result column="PDATE" property="pdate" jdbcType="TIMESTAMP" />
+								    <result column="PDESC" property="pdesc" jdbcType="VARCHAR" />
+								    <result column="PFLAG" property="pflag" jdbcType="DECIMAL" />
+								    <result column="CID" property="cid" jdbcType="VARCHAR" />
+								    <result column="PSALE" property="psale" jdbcType="DECIMAL" />
+								    <result column="BID" property="bid" jdbcType="DECIMAL" />
+								    <result column="SEARCHINFORMATION" property="searchinformation" jdbcType="VARCHAR" />
+
+							    	<!-- 一个商品对应多张商品图片 -->
+									<collection property="imageProducts" ofType="com.shop.pojo.ImageProduct">
+										<id column="IP_ID" property="ipId"/>
+											<result column="PID" property="pid" />
+											<result column="IP_ROUTE" property="ipRoute"/>
+									</collection>
+							</association >
+					</collection>
+			</collection>
+	</resultMap>
+  	<select id="getUserOrderOrderitemProduct" resultMap="user_order_orderitem_product" parameterType="java.lang.String">
+  		select
+	        ORDERSS.ORDERID,
+	        ORDERSS.ORDERTIME,
+	        ORDERSS.TOTAL,
+	        ORDERSS.ORDERSTATE,
+	        ORDERSS.TD_ID,
+	        
+	        TAKE_DELIVERY.TD_NAME,
+	        TAKE_DELIVERY.TD_ADDRESS,
+	        TAKE_DELIVERY.TD_TELEPHONE,
+	        
+	        USERS.USERNAME,
+	        
+	        ORDERITEM.OI_ID,
+	        ORDERITEM.QUANTITY,
+	        ORDERITEM.OI_TOTAL,
+	        ORDERITEM.PID,
+	        ORDERITEM.ORDERID,
+	        ORDERITEM.COMMENTFLAG,
+	        ORDERITEM.PRODUCTSPEC,
+	        
+	        PRODUCT.PNAME,
+	        PRODUCT.SHOP_PRICE,
+	        PRODUCT.PDESC,
+	        
+	        IMAGE_PRODUCT.IP_ROUTE
+        from
+        	ORDERSS,
+        	TAKE_DELIVERY,
+        	USERS,
+        	ORDERITEM,
+        	PRODUCT,
+        	IMAGE_PRODUCT
+        where 
+        	ORDERSS.USERID = USERS.USERID
+        	and TAKE_DELIVERY.TD_ID = ORDERSS.TD_ID
+        	and ORDERSS.ORDERID = ORDERITEM.ORDERID
+        	and ORDERITEM.PID = PRODUCT.PID
+        	and PRODUCT.PID = IMAGE_PRODUCT.PID
+        	and USERS.USERID = #{userid}
+  	</select>
+  	
+  	
+  	<!-- ====== 获得一个用户的所有订单信息 - 返回一个订单列表 =====-->
+  	<!-- 获取用户的订单 2019-8-8-->
+   	<resultMap id="order_orderitem_product" type="com.shop.pojo.Orderss" >
+		<id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+			<result column="ORDERTIME" property="ordertime" jdbcType="TIMESTAMP" />
+			<result column="TOTAL" property="total" jdbcType="DECIMAL" />
+			<result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+			<result column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+			<result column="USERID" property="userid" jdbcType="VARCHAR" />
+				    
+			<!-- 一个订单对应一份收货信息 -->
+			<association  property="takeDelivery" javaType="com.shop.pojo.TakeDelivery">
+				<id column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+				<result column="USERID" property="userid" jdbcType="VARCHAR" />
+				<result column="TD_NAME" property="tdName" jdbcType="VARCHAR" />
+				<result column="TD_ADDRESS" property="tdAddress" jdbcType="VARCHAR" />
+				<result column="TD_TELEPHONE" property="tdTelephone" jdbcType="VARCHAR" />
+				<result column="TDSTATE" property="tdstate" jdbcType="VARCHAR" />
+			</association >
+				    
+			<!-- 一个订单对应多个子项订单 -->
+			<collection property="orderItemList" ofType="com.shop.pojo.Orderitem">
+			<id column="OI_ID" property="oiId" jdbcType="VARCHAR" />
+			<result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+			<result column="OI_TOTAL" property="oiTotal" jdbcType="DECIMAL" />
+			<result column="PID" property="pid" jdbcType="VARCHAR" />
+			<result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+			<result column="COMMENTFLAG" property="commentflag" jdbcType="VARCHAR" />
+			<result column="PRODUCTSPEC" property="productspec" jdbcType="VARCHAR" />
+				    		
+				<!-- 一个订单子项对应一份商品 -->
+				<association  property="producItem" javaType="com.shop.pojo.Product">
+					<id column="PID" property="pid" jdbcType="VARCHAR" />
+						<result column="PNAME" property="pname" jdbcType="VARCHAR" />
+						<result column="SHOP_PRICE" property="shopPrice" jdbcType="DECIMAL" />
+						<result column="MARKET_PRICE" property="marketPrice" jdbcType="DECIMAL" />
+						<result column="PDATE" property="pdate" jdbcType="TIMESTAMP" />
+						<result column="PDESC" property="pdesc" jdbcType="VARCHAR" />
+						<result column="PFLAG" property="pflag" jdbcType="DECIMAL" />
+						<result column="CID" property="cid" jdbcType="VARCHAR" />
+						<result column="PSALE" property="psale" jdbcType="DECIMAL" />
+						<result column="BID" property="bid" jdbcType="DECIMAL" />
+						<result column="SEARCHINFORMATION" property="searchinformation" jdbcType="VARCHAR" />
+
+						<!-- 一个商品对应多张商品图片 -->
+						<collection property="imageProducts" ofType="com.shop.pojo.ImageProduct">
+							<id column="IP_ID" property="ipId"/>
+								<result column="PID" property="pid" />
+								<result column="IP_ROUTE" property="ipRoute"/>
+						</collection>
+				</association >
+		</collection>
+	</resultMap>
+  <!-- 	<select id="getOrderOrderitemProduct" resultMap="order_orderitem_product" parameterType="java.lang.String">
+ 		select
+	        ORDERSS.ORDERID,
+	        ORDERSS.ORDERTIME,
+	        ORDERSS.TOTAL,
+	        ORDERSS.ORDERSTATE,
+	        ORDERSS.TD_ID,
+	        
+	        TAKE_DELIVERY.TD_NAME,
+	        TAKE_DELIVERY.TD_ADDRESS,
+	        TAKE_DELIVERY.TD_TELEPHONE,
+	        
+	        ORDERITEM.OI_ID,
+	        ORDERITEM.QUANTITY,
+	        ORDERITEM.OI_TOTAL,
+	        ORDERITEM.PID,
+	        ORDERITEM.ORDERID,
+	        ORDERITEM.COMMENTFLAG,
+	        ORDERITEM.PRODUCTSPEC,
+	        
+	        PRODUCT.PNAME,
+	        PRODUCT.SHOP_PRICE,
+	        PRODUCT.PDESC,
+	        
+	        IMAGE_PRODUCT.IP_ROUTE
+        from
+        	ORDERSS,
+        	TAKE_DELIVERY,
+        	USERS,
+        	ORDERITEM,
+        	PRODUCT,
+        	IMAGE_PRODUCT
+        where 
+        	ORDERSS.USERID = #{userid}
+        	and TAKE_DELIVERY.TD_ID = ORDERSS.TD_ID
+        	and ORDERSS.ORDERID = ORDERITEM.ORDERID
+        	and ORDERITEM.PID = PRODUCT.PID
+        	and PRODUCT.PID = IMAGE_PRODUCT.PID
+        order by 
+        	ORDERSS.ORDERTIME DESC
+  	</select> -->
+  	
+  	<select id="getOrderOrderitemProduct" resultMap="order_orderitem_product" parameterType="java.lang.String">
+ 		select
+	        ORDERSS.ORDERID,
+	        ORDERSS.ORDERTIME,
+	        ORDERSS.TOTAL,
+	        ORDERSS.ORDERSTATE,
+	        ORDERSS.TD_ID,
+	        
+	        TAKE_DELIVERY.TD_NAME,
+	        TAKE_DELIVERY.TD_ADDRESS,
+	        TAKE_DELIVERY.TD_TELEPHONE,
+	        
+	        ORDERITEM.OI_ID,
+	        ORDERITEM.QUANTITY,
+	        ORDERITEM.OI_TOTAL,
+	        ORDERITEM.PID,
+	        ORDERITEM.ORDERID,
+	        ORDERITEM.COMMENTFLAG,
+	        ORDERITEM.PRODUCTSPEC,
+	        
+	        PRODUCT.PNAME,
+	        PRODUCT.SHOP_PRICE,
+	        PRODUCT.PDESC,
+	        
+	        IMAGE_PRODUCT.IP_ROUTE
+        from
+        	ORDERSS,
+        	TAKE_DELIVERY,
+        	ORDERITEM,
+        	PRODUCT,
+        	IMAGE_PRODUCT
+        where 
+        	ORDERSS.USERID = #{userid}
+        	and TAKE_DELIVERY.TD_ID = ORDERSS.TD_ID
+        	and ORDERSS.ORDERID = ORDERITEM.ORDERID
+        	and ORDERITEM.PID = PRODUCT.PID
+        	and PRODUCT.PID = IMAGE_PRODUCT.PID
+        order by 
+        	ORDERSS.ORDERTIME DESC,ORDERITEM.OI_ID DESC
+  	</select>
+  	
+  	<!--  2019-8-11  -->
+  	<!-- 根据用户ID 与 订单ID 返回对应订单项的商品详细信息 -->
+  	<select id="getOrderitemProductByUseridAndOrderid" resultMap="order_orderitem_product" parameterType="com.shop.pojo.OrderProperty">
+ 		select
+	        ORDERSS.ORDERID,
+	        ORDERSS.ORDERTIME,
+	        ORDERSS.TOTAL,
+	        ORDERSS.ORDERSTATE,
+	        ORDERSS.TD_ID,
+	        
+	        TAKE_DELIVERY.TD_NAME,
+	        TAKE_DELIVERY.TD_ADDRESS,
+	        TAKE_DELIVERY.TD_TELEPHONE,
+	        
+	        ORDERITEM.OI_ID,
+	        ORDERITEM.QUANTITY,
+	        ORDERITEM.OI_TOTAL,
+	        ORDERITEM.PID,
+	        ORDERITEM.ORDERID,
+	        ORDERITEM.COMMENTFLAG,
+	        ORDERITEM.PRODUCTSPEC,
+	        
+	        PRODUCT.PNAME,
+	        PRODUCT.SHOP_PRICE,
+	        PRODUCT.PDESC,
+	        
+	        IMAGE_PRODUCT.IP_ROUTE
+        from
+        	ORDERSS,
+        	TAKE_DELIVERY,
+        	ORDERITEM,
+        	PRODUCT,
+        	IMAGE_PRODUCT
+        where 
+        	ORDERSS.USERID = #{userid}
+        	and ORDERSS.ORDERID = #{orderid}
+        	and TAKE_DELIVERY.TD_ID = ORDERSS.TD_ID
+        	and ORDERSS.ORDERID = ORDERITEM.ORDERID
+        	and ORDERITEM.PID = PRODUCT.PID
+        	and PRODUCT.PID = IMAGE_PRODUCT.PID
+  	</select>
+  	
+  	
+  	
+  	
+  	<!-- =========================安 ===============================-->
+  	  <resultMap id="Order_TakeDelivery_Map" type="com.shop.pojo.Orderss" >
+		 <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+			<result column="ORDERTIME" property="ordertime"/>
+			<result column="TOTAL" property="total"/>
+			<result column="ORDERSTATE" property="orderstate"/>
+			<result column="TD_ID" property="tdId"/>
+			<result column="USERID" property="userid" />
+			
+			<!-- 一个订单对应一个收货地址片 -->
+			<!--  takeDelivery 是 Orderss的属性-->
+			<collection property="takeDelivery" ofType="com.shop.pojo.TakeDelivery">
+				<id column="TD_ID" property="tdId"/>
+					<result column="USERID" property="userid" />
+					<result column="TD_NAME" property="tdName"/>
+					<result column="TD_ADDRESS" property="tdAddress"/>
+					<result column="TD_TELEPHONE" property="tdTelephone"/>
+			</collection>
+	</resultMap>	
+ 	 <!-- 获取订单对应的收货信息 2019-8-8-->
+	<sql id="Order_TakeDelivery" >
+			o.ORDERID,
+			o.ORDERTIME,
+			o.TOTAL,
+			o.ORDERSTATE,
+			o.TD_ID,
+			o.USERID,
+			td.TD_NAME,
+			td.TD_ADDRESS,
+			td.TD_TELEPHONE
+	</sql> 
+	<!-- ======================================== -->
+	<!-- 获取带收货信息的订单 -->
+	<select id="selectAllOrdersWithTakeDelivery" resultMap="Order_TakeDelivery_Map" >
+		SELECT
+			<include refid="Order_TakeDelivery" />
+		FROM
+			ORDERSS o
+			LEFT JOIN TAKE_DELIVERY td
+			ON o.TD_ID = td.TD_ID
+	</select>
+	<!-- 获取带收货信息的订单  模糊查询 -->
+	<select id="selectAllOrdersWithTakeDeliveryLike" resultMap="Order_TakeDelivery_Map" parameterType="java.lang.String" >
+		SELECT
+			<include refid="Order_TakeDelivery" />
+		FROM
+			ORDERSS o
+			LEFT JOIN TAKE_DELIVERY td
+			ON o.TD_ID = td.TD_ID
+		where o.ORDERID like #{orderid}
+	</select>
+	<!-- 获取带收货信息的订单  分订单状态 -->
+	<select id="selectAllOrdersWithTakeDeliveryByOrderState" resultMap="Order_TakeDelivery_Map" parameterType="java.math.BigDecimal">
+		SELECT
+			<include refid="Order_TakeDelivery" />
+		FROM
+			ORDERSS o
+			LEFT JOIN TAKE_DELIVERY td
+			ON o.TD_ID = td.TD_ID
+			WHERE o.ORDERSTATE = #{OrderState}
+	</select>
+  	<!-- =======================安 END =============================-->
+  
+</mapper>

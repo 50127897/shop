@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.MessagesMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Messages" >
+    <id column="MID" property="mid" jdbcType="DECIMAL" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="PID" property="pid" jdbcType="TIMESTAMP" />
+    <result column="MCONTENT" property="mcontent" jdbcType="VARCHAR" />
+    <result column="EID" property="eid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MID, CUSTOMER_ID, PID, MCONTENT, EID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.MessagesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MESSAGES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from MESSAGES
+    where MID = #{mid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from MESSAGES
+    where MID = #{mid,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.MessagesExample" >
+    delete from MESSAGES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Messages" >
+    insert into MESSAGES (MID, CUSTOMER_ID, PID, 
+      MCONTENT, EID)
+    values (#{mid,jdbcType=DECIMAL}, #{customerId,jdbcType=VARCHAR}, #{pid,jdbcType=TIMESTAMP}, 
+      #{mcontent,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Messages" >
+    insert into MESSAGES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        MID,
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="mcontent != null" >
+        MCONTENT,
+      </if>
+      <if test="eid != null" >
+        EID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mcontent != null" >
+        #{mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.MessagesExample" resultType="java.lang.Integer" >
+    select count(*) from MESSAGES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MESSAGES
+    <set >
+      <if test="record.mid != null" >
+        MID = #{record.mid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerId != null" >
+        CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mcontent != null" >
+        MCONTENT = #{record.mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eid != null" >
+        EID = #{record.eid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MESSAGES
+    set MID = #{record.mid,jdbcType=DECIMAL},
+      CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      PID = #{record.pid,jdbcType=TIMESTAMP},
+      MCONTENT = #{record.mcontent,jdbcType=VARCHAR},
+      EID = #{record.eid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Messages" >
+    update MESSAGES
+    <set >
+      <if test="customerId != null" >
+        CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mcontent != null" >
+        MCONTENT = #{mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        EID = #{eid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MID = #{mid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Messages" >
+    update MESSAGES
+    set CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+      PID = #{pid,jdbcType=TIMESTAMP},
+      MCONTENT = #{mcontent,jdbcType=VARCHAR},
+      EID = #{eid,jdbcType=VARCHAR}
+    where MID = #{mid,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.ProductSpecMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.ProductSpec" >
+    <id column="PS_ID" property="psId" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="PS_SPEC" property="psSpec" jdbcType="VARCHAR" />
+    <result column="PS_STORE" property="psStore" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PS_ID, PID, PS_SPEC, PS_STORE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.ProductSpecExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PRODUCT_SPEC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRODUCT_SPEC
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from PRODUCT_SPEC
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.ProductSpecExample" >
+    delete from PRODUCT_SPEC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.ProductSpec" >
+    insert into PRODUCT_SPEC (PS_ID, PID, PS_SPEC, 
+      PS_STORE)
+    values (#{psId,jdbcType=DECIMAL}, #{pid,jdbcType=VARCHAR}, #{psSpec,jdbcType=VARCHAR}, 
+      #{psStore,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.ProductSpec" >
+    insert into PRODUCT_SPEC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="psId != null" >
+        PS_ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="psSpec != null" >
+        PS_SPEC,
+      </if>
+      <if test="psStore != null" >
+        PS_STORE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="psId != null" >
+        #{psId,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="psSpec != null" >
+        #{psSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="psStore != null" >
+        #{psStore,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.ProductSpecExample" resultType="java.lang.Integer" >
+    select count(*) from PRODUCT_SPEC
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PRODUCT_SPEC
+    <set >
+      <if test="record.psId != null" >
+        PS_ID = #{record.psId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psSpec != null" >
+        PS_SPEC = #{record.psSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psStore != null" >
+        PS_STORE = #{record.psStore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PRODUCT_SPEC
+    set PS_ID = #{record.psId,jdbcType=DECIMAL},
+      PID = #{record.pid,jdbcType=VARCHAR},
+      PS_SPEC = #{record.psSpec,jdbcType=VARCHAR},
+      PS_STORE = #{record.psStore,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.ProductSpec" >
+    update PRODUCT_SPEC
+    <set >
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="psSpec != null" >
+        PS_SPEC = #{psSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="psStore != null" >
+        PS_STORE = #{psStore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.ProductSpec" >
+    update PRODUCT_SPEC
+    set PID = #{pid,jdbcType=VARCHAR},
+      PS_SPEC = #{psSpec,jdbcType=VARCHAR},
+      PS_STORE = #{psStore,jdbcType=DECIMAL}
+    where PS_ID = #{psId,jdbcType=DECIMAL}
+  </update>
+  
+  
+  <!-- 根据pid查找规格列表 - 按规格号升序排序  2019-8-9  -->
+  <select id="getStockByPid" parameterType="java.lang.String" resultMap="BaseResultMap" >
+  	select
+  		PS_ID,
+		PID,
+		PS_SPEC,
+		PS_STORE
+	from 
+		PRODUCT_SPEC
+	where
+		PID = #{pid}
+	order by
+		PS_SPEC ASC
+  </select>
+</mapper>

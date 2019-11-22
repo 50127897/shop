@@ -1,0 +1,17 @@
+com\shop\mapper\ProductMapper.class
+com\shop\mapper\ImageCommentMapper.class
+com\shop\mapper\CartMapper.class
+com\shop\mapper\TakeDeliveryMapper.class
+com\shop\mapper\MessagesMapper.class
+com\shop\mapper\CategorysMapper.class
+com\shop\mapper\LogisticsMapper.class
+com\shop\mapper\BrandsMapper.class
+com\shop\mapper\ImageProductMapper.class
+com\shop\mapper\OrderssMapper.class
+com\shop\mapper\EmployeeMapper.class
+com\shop\mapper\CartitemMapper.class
+com\shop\mapper\CollectionsMapper.class
+com\shop\mapper\ProductSpecMapper.class
+com\shop\mapper\UsersMapper.class
+com\shop\mapper\CommentsMapper.class
+com\shop\mapper\OrderitemMapper.class

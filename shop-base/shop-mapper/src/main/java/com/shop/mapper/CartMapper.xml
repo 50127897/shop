@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.CartMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Cart" >
+    <id column="CARTID" property="cartid" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CARTID, USERID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.CartExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CART
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CART
+    where CARTID = #{cartid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CART
+    where CARTID = #{cartid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.CartExample" >
+    delete from CART
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Cart" >
+    insert into CART (CARTID, USERID)
+    values (#{cartid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Cart" >
+    insert into CART
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartid != null" >
+        CARTID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartid != null" >
+        #{cartid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.CartExample" resultType="java.lang.Integer" >
+    select count(*) from CART
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CART
+    <set >
+      <if test="record.cartid != null" >
+        CARTID = #{record.cartid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CART
+    set CARTID = #{record.cartid,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Cart" >
+    update CART
+    <set >
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CARTID = #{cartid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Cart" >
+    update CART
+    set USERID = #{userid,jdbcType=VARCHAR}
+    where CARTID = #{cartid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+	<!-- ====== 获得一个用户的购物车商品列表 - 返回一个 购物车项 列表 ===== -->
+  	<!-- 获取用户的购物车商品列表 2019-8-9 -->
+   	<resultMap id="cart_cartitem_product" type="com.shop.pojo.Cart" >
+   		<id column="CARTID" property="cartid" jdbcType="VARCHAR" />
+   			<result column="USERID" property="userid" jdbcType="VARCHAR" />
+		
+			<!-- 一个购物车对应多份 购物车项 -->
+			<collection property="cartitemList" ofType="com.shop.pojo.Cartitem">
+				<id column="CARTITEMID" property="cartitemid" jdbcType="VARCHAR" />
+				    <result column="CARTID" property="cartid" jdbcType="VARCHAR" />
+				    <result column="PS_ID" property="psId" jdbcType="DECIMAL" />
+				    		
+					<!-- 一个 购物车项 对应 一份商品规格对象 -->
+					<association  property="productSpec" javaType="com.shop.pojo.ProductSpec">
+						 <id column="PS_ID" property="psId" jdbcType="DECIMAL" />
+						    <result column="PID" property="pid" jdbcType="VARCHAR" />
+						    <result column="PS_SPEC" property="psSpec" jdbcType="VARCHAR" />
+						    <result column="PS_STORE" property="psStore" jdbcType="DECIMAL" />
+							
+							<!--  一份 商品规格对象 对应 一份商品 -->
+							<association  property="descProduct" javaType="com.shop.pojo.Product">
+								<id column="PID" property="pid" jdbcType="VARCHAR" />
+								    <result column="PNAME" property="pname" jdbcType="VARCHAR" />
+								    <result column="SHOP_PRICE" property="shopPrice" jdbcType="DECIMAL" />
+								    <result column="MARKET_PRICE" property="marketPrice" jdbcType="DECIMAL" />
+								    <result column="PDATE" property="pdate" jdbcType="TIMESTAMP" />
+								    <result column="PDESC" property="pdesc" jdbcType="VARCHAR" />
+								    <result column="PFLAG" property="pflag" jdbcType="DECIMAL" />
+								    <result column="CID" property="cid" jdbcType="VARCHAR" />
+								    <result column="PSALE" property="psale" jdbcType="DECIMAL" />
+								    <result column="BID" property="bid" jdbcType="DECIMAL" />
+								    <result column="SEARCHINFORMATION" property="searchinformation" jdbcType="VARCHAR" />
+									
+									<!--  一份 一份商品 对应 多份商品图片 -->
+									<collection property="imageProducts" ofType="com.shop.pojo.ImageProduct">
+										<id column="IP_ID" property="ipId" jdbcType="DECIMAL" />
+										    <result column="PID" property="pid" jdbcType="VARCHAR" />
+										    <result column="IP_ROUTE" property="ipRoute" jdbcType="VARCHAR" />	
+									</collection>
+							</association>
+					</association >
+			</collection>
+	</resultMap>  
+  
+    <!-- ==============  购物车所用的SQL 2019-8-9  根据userid获取所有购物车商品 ============== -->
+	<select id="getAllCartProductByUserid" resultMap="cart_cartitem_product" parameterType="java.lang.String">
+ 		select
+ 			CART.CARTID,
+ 			
+	        CARTITEM.CARTITEMID,
+	        CARTITEM.CARTID,
+	        CARTITEM.PS_ID,
+	        
+	        PRODUCT_SPEC.PID,
+	        PRODUCT_SPEC.PS_SPEC,
+	        
+	        PRODUCT.PNAME,
+	        PRODUCT.PDESC,
+	        PRODUCT.SHOP_PRICE,
+	        
+	        IMAGE_PRODUCT.IP_ROUTE
+        from
+        	CART,
+        	CARTITEM,
+        	PRODUCT_SPEC,
+        	PRODUCT,
+        	IMAGE_PRODUCT
+        where 
+        	CART.USERID = #{userid}
+        	and CART.CARTID = CARTITEM.CARTID
+        	and CARTITEM.PS_ID = PRODUCT_SPEC.PS_ID
+        	and PRODUCT_SPEC.PID = PRODUCT.PID
+        	and PRODUCT.PID = IMAGE_PRODUCT.PID
+  	</select>
+  	
+  	
+  
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.LogisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Logistics" >
+    <id column="LOID" property="loid" jdbcType="VARCHAR" />
+    <result column="LODATE" property="lodate" jdbcType="TIMESTAMP" />
+    <result column="LOADDRESS" property="loaddress" jdbcType="VARCHAR" />
+    <result column="LOSTATE" property="lostate" jdbcType="DECIMAL" />
+    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOID, LODATE, LOADDRESS, LOSTATE, ORDERID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.LogisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LOGISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from LOGISTICS
+    where LOID = #{loid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LOGISTICS
+    where LOID = #{loid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.LogisticsExample" >
+    delete from LOGISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Logistics" >
+    insert into LOGISTICS (LOID, LODATE, LOADDRESS, 
+      LOSTATE, ORDERID)
+    values (#{loid,jdbcType=VARCHAR}, #{lodate,jdbcType=TIMESTAMP}, #{loaddress,jdbcType=VARCHAR}, 
+      #{lostate,jdbcType=DECIMAL}, #{orderid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Logistics" >
+    insert into LOGISTICS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loid != null" >
+        LOID,
+      </if>
+      <if test="lodate != null" >
+        LODATE,
+      </if>
+      <if test="loaddress != null" >
+        LOADDRESS,
+      </if>
+      <if test="lostate != null" >
+        LOSTATE,
+      </if>
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loid != null" >
+        #{loid,jdbcType=VARCHAR},
+      </if>
+      <if test="lodate != null" >
+        #{lodate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loaddress != null" >
+        #{loaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lostate != null" >
+        #{lostate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.LogisticsExample" resultType="java.lang.Integer" >
+    select count(*) from LOGISTICS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LOGISTICS
+    <set >
+      <if test="record.loid != null" >
+        LOID = #{record.loid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lodate != null" >
+        LODATE = #{record.lodate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loaddress != null" >
+        LOADDRESS = #{record.loaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lostate != null" >
+        LOSTATE = #{record.lostate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LOGISTICS
+    set LOID = #{record.loid,jdbcType=VARCHAR},
+      LODATE = #{record.lodate,jdbcType=TIMESTAMP},
+      LOADDRESS = #{record.loaddress,jdbcType=VARCHAR},
+      LOSTATE = #{record.lostate,jdbcType=DECIMAL},
+      ORDERID = #{record.orderid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Logistics" >
+    update LOGISTICS
+    <set >
+      <if test="lodate != null" >
+        LODATE = #{lodate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loaddress != null" >
+        LOADDRESS = #{loaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lostate != null" >
+        LOSTATE = #{lostate,jdbcType=DECIMAL},
+      </if>
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOID = #{loid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Logistics" >
+    update LOGISTICS
+    set LODATE = #{lodate,jdbcType=TIMESTAMP},
+      LOADDRESS = #{loaddress,jdbcType=VARCHAR},
+      LOSTATE = #{lostate,jdbcType=DECIMAL},
+      ORDERID = #{orderid,jdbcType=VARCHAR}
+    where LOID = #{loid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 根据订单编号 orderid 查询其物流信息 按时间升序 -->
+   <select id="queryLogisticsByOrderidASC" resultType="com.shop.pojo.Logistics" parameterType="java.lang.String" >
+    select
+    	LOID, 
+    	LODATE,
+    	LOADDRESS,
+    	LOSTATE,
+    	ORDERID
+    from 
+    	LOGISTICS
+    where 
+    	ORDERID = #{orderid}
+    order by 
+    	LODATE ASC
+  </select>
+  
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.TakeDeliveryMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.TakeDelivery" >
+    <id column="TD_ID" property="tdId" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="TD_NAME" property="tdName" jdbcType="VARCHAR" />
+    <result column="TD_ADDRESS" property="tdAddress" jdbcType="VARCHAR" />
+    <result column="TD_TELEPHONE" property="tdTelephone" jdbcType="VARCHAR" />
+    <result column="TDSTATE" property="tdstate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TD_ID, USERID, TD_NAME, TD_ADDRESS, TD_TELEPHONE, TDSTATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.TakeDeliveryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TAKE_DELIVERY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TAKE_DELIVERY
+    where TD_ID = #{tdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TAKE_DELIVERY
+    where TD_ID = #{tdId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.TakeDeliveryExample" >
+    delete from TAKE_DELIVERY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.TakeDelivery" >
+    insert into TAKE_DELIVERY (TD_ID, USERID, TD_NAME, 
+      TD_ADDRESS, TD_TELEPHONE, TDSTATE
+      )
+    values (#{tdId,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{tdName,jdbcType=VARCHAR}, 
+      #{tdAddress,jdbcType=VARCHAR}, #{tdTelephone,jdbcType=VARCHAR}, #{tdstate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.TakeDelivery" >
+    insert into TAKE_DELIVERY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tdId != null" >
+        TD_ID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="tdName != null" >
+        TD_NAME,
+      </if>
+      <if test="tdAddress != null" >
+        TD_ADDRESS,
+      </if>
+      <if test="tdTelephone != null" >
+        TD_TELEPHONE,
+      </if>
+      <if test="tdstate != null" >
+        TDSTATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tdId != null" >
+        #{tdId,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="tdName != null" >
+        #{tdName,jdbcType=VARCHAR},
+      </if>
+      <if test="tdAddress != null" >
+        #{tdAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tdTelephone != null" >
+        #{tdTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="tdstate != null" >
+        #{tdstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.TakeDeliveryExample" resultType="java.lang.Integer" >
+    select count(*) from TAKE_DELIVERY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TAKE_DELIVERY
+    <set >
+      <if test="record.tdId != null" >
+        TD_ID = #{record.tdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdName != null" >
+        TD_NAME = #{record.tdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdAddress != null" >
+        TD_ADDRESS = #{record.tdAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdTelephone != null" >
+        TD_TELEPHONE = #{record.tdTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdstate != null" >
+        TDSTATE = #{record.tdstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TAKE_DELIVERY
+    set TD_ID = #{record.tdId,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR},
+      TD_NAME = #{record.tdName,jdbcType=VARCHAR},
+      TD_ADDRESS = #{record.tdAddress,jdbcType=VARCHAR},
+      TD_TELEPHONE = #{record.tdTelephone,jdbcType=VARCHAR},
+      TDSTATE = #{record.tdstate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.TakeDelivery" >
+    update TAKE_DELIVERY
+    <set >
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="tdName != null" >
+        TD_NAME = #{tdName,jdbcType=VARCHAR},
+      </if>
+      <if test="tdAddress != null" >
+        TD_ADDRESS = #{tdAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tdTelephone != null" >
+        TD_TELEPHONE = #{tdTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="tdstate != null" >
+        TDSTATE = #{tdstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TD_ID = #{tdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.TakeDelivery" >
+    update TAKE_DELIVERY
+    set USERID = #{userid,jdbcType=VARCHAR},
+      TD_NAME = #{tdName,jdbcType=VARCHAR},
+      TD_ADDRESS = #{tdAddress,jdbcType=VARCHAR},
+      TD_TELEPHONE = #{tdTelephone,jdbcType=VARCHAR},
+      TDSTATE = #{tdstate,jdbcType=VARCHAR}
+    where TD_ID = #{tdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.BrandsMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Brands" >
+    <id column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="BNAME" property="bname" jdbcType="VARCHAR" />
+    <result column="BR_ROUTE" property="brRoute" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    BID, BNAME, BR_ROUTE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.BrandsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BRANDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from BRANDS
+    where BID = #{bid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from BRANDS
+    where BID = #{bid,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.BrandsExample" >
+    delete from BRANDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Brands" >
+    insert into BRANDS (BID, BNAME, BR_ROUTE
+      )
+    values (#{bid,jdbcType=DECIMAL}, #{bname,jdbcType=VARCHAR}, #{brRoute,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Brands" >
+    insert into BRANDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        BID,
+      </if>
+      <if test="bname != null" >
+        BNAME,
+      </if>
+      <if test="brRoute != null" >
+        BR_ROUTE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=DECIMAL},
+      </if>
+      <if test="bname != null" >
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="brRoute != null" >
+        #{brRoute,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.BrandsExample" resultType="java.lang.Integer" >
+    select count(*) from BRANDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update BRANDS
+    <set >
+      <if test="record.bid != null" >
+        BID = #{record.bid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bname != null" >
+        BNAME = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brRoute != null" >
+        BR_ROUTE = #{record.brRoute,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update BRANDS
+    set BID = #{record.bid,jdbcType=DECIMAL},
+      BNAME = #{record.bname,jdbcType=VARCHAR},
+      BR_ROUTE = #{record.brRoute,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Brands" >
+    update BRANDS
+    <set >
+      <if test="bname != null" >
+        BNAME = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="brRoute != null" >
+        BR_ROUTE = #{brRoute,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BID = #{bid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Brands" >
+    update BRANDS
+    set BNAME = #{bname,jdbcType=VARCHAR},
+      BR_ROUTE = #{brRoute,jdbcType=VARCHAR}
+    where BID = #{bid,jdbcType=DECIMAL}
+  </update>
+  
+  
+  <!-- 根据BID排序升序 - 查询前3项记录 2019-8-3 -->
+  <!-- 2019-11-21 转mySql  修改 -->
+  <select id="queryTop3BrandsOrderByBidASC" resultMap="BaseResultMap">
+  	select *
+    from BRANDS
+    <!-- where ROWNUM <![CDATA[<=]]> 3  -->
+    order by BID asc limit 3
+  </select>
+  
+</mapper>

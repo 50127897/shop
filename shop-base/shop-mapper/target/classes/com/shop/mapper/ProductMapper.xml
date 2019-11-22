@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Product" >
+    <id column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="PNAME" property="pname" jdbcType="VARCHAR" />
+    <result column="SHOP_PRICE" property="shopPrice" jdbcType="DECIMAL" />
+    <result column="MARKET_PRICE" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="PDATE" property="pdate" jdbcType="TIMESTAMP" />
+    <result column="PDESC" property="pdesc" jdbcType="VARCHAR" />
+    <result column="PFLAG" property="pflag" jdbcType="DECIMAL" />
+    <result column="CID" property="cid" jdbcType="VARCHAR" />
+    <result column="PSALE" property="psale" jdbcType="DECIMAL" />
+    <result column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="SEARCHINFORMATION" property="searchinformation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PID, PNAME, SHOP_PRICE, MARKET_PRICE, PDATE, PDESC, PFLAG, CID, PSALE, BID, SEARCHINFORMATION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shop.pojo.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRODUCT
+    where PID = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PRODUCT
+    where PID = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shop.pojo.ProductExample" >
+    delete from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Product" >
+    insert into PRODUCT (PID, PNAME, SHOP_PRICE, 
+      MARKET_PRICE, PDATE, PDESC, 
+      PFLAG, CID, PSALE, 
+      BID, SEARCHINFORMATION)
+    values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{shopPrice,jdbcType=DECIMAL}, 
+      #{marketPrice,jdbcType=DECIMAL}, #{pdate,jdbcType=TIMESTAMP}, #{pdesc,jdbcType=VARCHAR}, 
+      #{pflag,jdbcType=DECIMAL}, #{cid,jdbcType=VARCHAR}, #{psale,jdbcType=DECIMAL}, 
+      #{bid,jdbcType=DECIMAL}, #{searchinformation,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shop.pojo.Product" >
+    insert into PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="pname != null" >
+        PNAME,
+      </if>
+      <if test="shopPrice != null" >
+        SHOP_PRICE,
+      </if>
+      <if test="marketPrice != null" >
+        MARKET_PRICE,
+      </if>
+      <if test="pdate != null" >
+        PDATE,
+      </if>
+      <if test="pdesc != null" >
+        PDESC,
+      </if>
+      <if test="pflag != null" >
+        PFLAG,
+      </if>
+      <if test="cid != null" >
+        CID,
+      </if>
+      <if test="psale != null" >
+        PSALE,
+      </if>
+      <if test="bid != null" >
+        BID,
+      </if>
+      <if test="searchinformation != null" >
+        SEARCHINFORMATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdate != null" >
+        #{pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pdesc != null" >
+        #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pflag != null" >
+        #{pflag,jdbcType=DECIMAL},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="psale != null" >
+        #{psale,jdbcType=DECIMAL},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=DECIMAL},
+      </if>
+      <if test="searchinformation != null" >
+        #{searchinformation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shop.pojo.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PRODUCT
+    <set >
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pname != null" >
+        PNAME = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPrice != null" >
+        SHOP_PRICE = #{record.shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.marketPrice != null" >
+        MARKET_PRICE = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pdate != null" >
+        PDATE = #{record.pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pdesc != null" >
+        PDESC = #{record.pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pflag != null" >
+        PFLAG = #{record.pflag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cid != null" >
+        CID = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psale != null" >
+        PSALE = #{record.psale,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bid != null" >
+        BID = #{record.bid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.searchinformation != null" >
+        SEARCHINFORMATION = #{record.searchinformation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PRODUCT
+    set PID = #{record.pid,jdbcType=VARCHAR},
+      PNAME = #{record.pname,jdbcType=VARCHAR},
+      SHOP_PRICE = #{record.shopPrice,jdbcType=DECIMAL},
+      MARKET_PRICE = #{record.marketPrice,jdbcType=DECIMAL},
+      PDATE = #{record.pdate,jdbcType=TIMESTAMP},
+      PDESC = #{record.pdesc,jdbcType=VARCHAR},
+      PFLAG = #{record.pflag,jdbcType=DECIMAL},
+      CID = #{record.cid,jdbcType=VARCHAR},
+      PSALE = #{record.psale,jdbcType=DECIMAL},
+      BID = #{record.bid,jdbcType=DECIMAL},
+      SEARCHINFORMATION = #{record.searchinformation,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.pojo.Product" >
+    update PRODUCT
+    <set >
+      <if test="pname != null" >
+        PNAME = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null" >
+        SHOP_PRICE = #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        MARKET_PRICE = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdate != null" >
+        PDATE = #{pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pdesc != null" >
+        PDESC = #{pdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pflag != null" >
+        PFLAG = #{pflag,jdbcType=DECIMAL},
+      </if>
+      <if test="cid != null" >
+        CID = #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="psale != null" >
+        PSALE = #{psale,jdbcType=DECIMAL},
+      </if>
+      <if test="bid != null" >
+        BID = #{bid,jdbcType=DECIMAL},
+      </if>
+      <if test="searchinformation != null" >
+        SEARCHINFORMATION = #{searchinformation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PID = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Product" >
+    update PRODUCT
+    set PNAME = #{pname,jdbcType=VARCHAR},
+      SHOP_PRICE = #{shopPrice,jdbcType=DECIMAL},
+      MARKET_PRICE = #{marketPrice,jdbcType=DECIMAL},
+      PDATE = #{pdate,jdbcType=TIMESTAMP},
+      PDESC = #{pdesc,jdbcType=VARCHAR},
+      PFLAG = #{pflag,jdbcType=DECIMAL},
+      CID = #{cid,jdbcType=VARCHAR},
+      PSALE = #{psale,jdbcType=DECIMAL},
+      BID = #{bid,jdbcType=DECIMAL},
+      SEARCHINFORMATION = #{searchinformation,jdbcType=VARCHAR}
+    where PID = #{pid,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 获取所有商品对应的图片 2019-8-1-->
+    <resultMap id="product_Image_Map" type="com.shop.pojo.Product" >
+		 <id column="PID" property="pid" jdbcType="VARCHAR" />
+			<result column="PNAME" property="pname"/>
+			<result column="SHOP_PRICE" property="shopPrice"/>
+			<result column="MARKET_PRICE" property="marketPrice"/>
+			<result column="PDATE" property="pdate"/>
+			<result column="PDESC" property="pdesc" />
+			<result column="PFLAG" property="pflag" />
+			<result column="CID" property="cid"/>
+			<result column="PSALE" property="psale"/>
+			<result column="BID" property="bid"/>
+			<result column="SEARCHINFORMATION" property="searchinformation"/>
+			
+			<!-- 一个商品对应多张商品图片 -->
+			<!--  imageProducts 是 Product的属性-->
+			<collection property="imageProducts" ofType="com.shop.pojo.ImageProduct">
+				<id column="IP_ID" property="ipId"/>
+					<result column="IPPID" property="pid" />
+					<result column="IP_ROUTE" property="ipRoute"/>
+			</collection>
+	</resultMap>	
+ 
+ 	 <!-- 获取所有商品对应的图片SQL语句 2019-8-1-->
+	<sql id="product_imageproduct" >
+			p.PID,
+			p.PNAME,
+			p.SHOP_PRICE,
+			p.MARKET_PRICE,
+			p.PDATE,
+			p.PDESC,
+			p.PFLAG,
+			p.CID,
+			p.PSALE,
+			p.BID,
+			p.SEARCHINFORMATION,
+			ipimage.IP_ID,
+			ipimage.PID IPPID,
+			ipimage.IP_ROUTE
+	</sql> 
+ 	
+ 	<!-- 查询所有商品的所有信息:返回的将是一个商品列表 2019-8-1 -->
+	<select id="selectAllPoductWithImage" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+  
+  	<!-- 根据商品ID查询一个商品的详细信息[带图片] 2019-8-1 -->
+  	<select id="selectPoductWithImageByPid" parameterType="java.lang.String" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		WHERE
+			p.PID = #{pid}
+	</select>
+	
+	
+	<!-- ============= 首页查询商品 ============= -->
+	<!-- 首页中男子精选 - 五项 - 根据上架时间的降序 2019-8-2 -->
+	<select id="selectManConcentrationTop5ByPdateDESC" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			select_man_concentration p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		ORDER BY
+			p.PDATE DESC
+	</select>
+	
+	<!-- 首页中女子精选 - 五项 - 根据上架时间的降序 2019-8-2 -->
+	<select id="selectWomanConcentrationTop5ByPdateDESC" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			select_woman_concentration p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		ORDER BY
+			p.PDATE DESC
+	</select>
+	
+	<!-- 首页中儿童精选 - 五项 - 根据上架时间的降序 2019-8-2 -->
+	<select id="selectChildConcentrationTop5ByPdateDESC" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			select_child_concentration p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		ORDER BY
+			p.PDATE DESC
+	</select>
+	
+	
+	<!-- 查询首页中8件热门商品  2019-8-5 -->
+	<select id="queryProductByHot" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			select_hot p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+	
+	
+	<!-- ========== 根据商品分类查询商品 ============= -->
+	<!-- 查询男士商品  2019-8-2 -->
+	<select id="queryProductByMan" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+	
+	<!-- 查询女士商品  2019-8-2 -->
+	<select id="queryProductByWomen" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+	
+	<!-- 查询儿童商品  2019-8-2 -->
+	<select id="queryProductByChildren" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+	
+	
+	<!-- ========== 根据品牌ID查询商品 ============= -->
+	<select id="queryProductByBrandBid" resultMap="product_Image_Map" parameterType="DECIMAL">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		WHERE
+			p.BID = #{bid}
+	</select>
+	
+	
+	
+	
+	
+	<!-- =============== for test ================= -->
+	<!-- 获取所有商品对应的图片 2019-8-1-->
+     <resultMap id="product_Image_Map_test" type="com.shop.pojo.Product" >
+		 <id column="PID" property="pid" jdbcType="VARCHAR" />
+			<result column="PNAME" property="pname"/>
+			<result column="SHOP_PRICE" property="shopPrice"/>
+			<result column="MARKET_PRICE" property="marketPrice"/>
+			<result column="PDATE" property="pdate"/>
+			<result column="PDESC" property="pdesc" />
+			<result column="PFLAG" property="pflag" />
+			<result column="CID" property="cid"/>
+			<result column="PSALE" property="psale"/>
+			<result column="BID" property="bid"/>
+			<result column="SEARCHINFORMATION" property="searchinformation"/>
+			
+			<!-- 一个商品对应多张商品图片 -->
+			<!--  imageProducts 是 Product的属性-->
+			<collection property="imageProducts" ofType="com.shop.pojo.ImageProduct">
+				<id column="IP_ID" property="ipId"/>
+					<result column="IPPID" property="pid" />
+					<result column="IP_ROUTE" property="ipRoute"/>
+			</collection>
+	</resultMap>	
+ 	 <!-- 获取所有商品对应的图片SQL语句 2019-8-1-->
+	<sql id="product_imageproduct_test" >
+			p.PID,
+			p.PNAME,
+			p.SHOP_PRICE,
+			p.MARKET_PRICE,
+			p.PDATE,
+			p.PDESC,
+			p.PFLAG,
+			p.CID,
+			p.PSALE,
+			p.BID,
+			p.SEARCHINFORMATION,
+			ipimage.IP_ID,
+			ipimage.PID IPPID,
+			ipimage.IP_ROUTE
+	</sql> 
+	<!-- ======================================== -->
+
+	
+	<!-- ========== 模糊查询 传入关键字不需要加模式匹配符号 % % ============= -->
+	<!-- 这里的入参为普通类型时,LIKE后面只能写value;如果是POJO对象,则写POJO对象 -->
+	<select id="queryProductByVague" resultMap="product_Image_Map_test" parameterType="java.lang.String">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		WHERE
+			p.SEARCHINFORMATION LIKE '%${value}%'
+	</select>
+	
+	
+	
+	<!-- =========================== 搜索页面  ============================= -->
+	<!-- 根据搜索关键字  -  按名称升序查询  2019-8-7  -->
+	<select id="queryProductByVagueByNameASC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PNAME ASC
+	</select>
+	
+	<!-- 根据搜索关键字  -  按名称降序查询  2019-8-7  -->
+	<select id="queryProductByVagueByNameDESC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PNAME DESC
+	</select>
+	
+
+	<!-- 根据搜索关键字  -  按上架日期升序查询  2019-8-7  -->
+	<select id="queryProductByVagueByPDATEASC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PDATE ASC
+	</select>
+
+	<!-- 根据搜索关键字  -  按上架日期降序查询  2019-8-7  -->
+	<select id="queryProductByVagueByPDATEDESC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PDATE DESC
+	</select>
+	
+	
+	
+	<!-- 根据搜索关键字  -  按价格升序查询  2019-8-7  -->
+	<select id="queryProductByVagueByShopPriceASC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.SHOP_PRICE ASC
+	</select>
+
+	<!-- 根据搜索关键字  -  按价格降序查询  2019-8-7  -->
+	<select id="queryProductByVagueByShopPriceDESC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.SHOP_PRICE DESC
+	</select>
+	
+	<!-- 根据搜索关键字  -  按销量升序查询  2019-8-7  -->
+	<select id="queryProductByVagueBySaleASC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PSALE ASC
+	</select>
+
+	<!-- 根据搜索关键字  -  按销量降序查询  2019-8-7  -->
+	<select id="queryProductByVagueBySaleDESC" resultMap="product_Image_Map_test" parameterType="com.shop.pojo.SearchProperty">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		<where>
+			<if test="searchKeysProperty != null">
+				and p.SEARCHINFORMATION LIKE #{searchKeysProperty}
+			</if>
+			<if test="bidProperty != null">
+				and p.BID = #{bidProperty}
+			</if>
+			<if test="cidProperty != null">
+				and p.CID = #{cidProperty}
+			</if>
+		</where>
+		ORDER BY p.PSALE DESC
+	</select>
+	
+	
+	<!-- ========== 猜你喜欢 ============= -->
+	<select id="queryProductByLike" resultMap="product_Image_Map">
+		SELECT
+			<include refid="product_imageproduct" />
+		FROM
+			select_like p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+	</select>
+	
+	
+	
+	<!-- 根据 pid 集合获得 商品集合 	2019-8-8 22:23 -->
+	<select id="getProductListByPidList" resultMap="product_Image_Map_test" parameterType="java.util.List">
+		SELECT
+			<include refid="product_imageproduct_test" />
+		FROM
+			PRODUCT p
+			LEFT JOIN IMAGE_PRODUCT ipimage
+			ON p.PID = ipimage.PID
+		WHERE
+			p.PID IN 
+			<foreach item="pid" collection="list" separator="," open="(" close=")" index=""> 
+				#{pid}   
+  			</foreach>
+  	</select>
+  	
+  	
+  	<!-- ======================================== 安 =========================================== -->
+  	
+  	<resultMap id="product_stock_Map" type="com.shop.pojo.Product" >
+		 <id column="PID" property="pid" jdbcType="VARCHAR" />
+			<result column="PNAME" property="pname"/>
+			<result column="SHOP_PRICE" property="shopPrice"/>
+			<result column="MARKET_PRICE" property="marketPrice"/>
+			<result column="PDATE" property="pdate"/>
+			<result column="PDESC" property="pdesc" />
+			<result column="PFLAG" property="pflag" />
+			<result column="CID" property="cid"/>
+			<result column="PSALE" property="psale"/>
+			<result column="BID" property="bid"/>
+			<result column="SEARCHINFORMATION" property="searchinformation"/>
+			
+			<!-- 一个商品对应多个库存 -->
+			<!--  productSpecs 是 Product的属性-->
+			<collection property="productSpecs" ofType="com.shop.pojo.ProductSpec">
+				<id column="PS_ID" property="psId"/>
+					<result column="PID" property="pid" />
+					<result column="PS_SPEC" property="psSpec"/>
+					<result column="PS_STORE" property="psStore"/>
+			</collection>
+	</resultMap>	
+
+	
+	<sql id="product_stock" >
+			p.PID,
+			p.PNAME,
+			p.SHOP_PRICE,
+			p.MARKET_PRICE,
+			p.PDATE,
+			p.PDESC,
+			p.PFLAG,
+			p.CID,
+			p.PSALE,
+			p.BID,
+			p.SEARCHINFORMATION,
+			pdesc.PS_SPEC,
+			pdesc.PS_ID,
+			pdesc.PS_STORE
+	</sql> 
+
+
+	<select id="selectAllPoductWithStock" resultMap="product_stock_Map" >
+		SELECT
+			<include refid="product_stock" />
+		FROM
+			PRODUCT p
+			RIGHT JOIN  PRODUCT_SPEC  pdesc
+			ON  p.PID  =  pdesc.PID
+	</select>
+	
+	
+	<select id="selectPoductWithStockByPid" resultMap="product_stock_Map" parameterType="java.lang.String" >
+		SELECT
+			<include refid="product_stock" />
+		FROM
+			PRODUCT p
+			RIGHT JOIN PRODUCT_SPEC pdesc
+			ON p.PID = pdesc.PID
+			where p.pid = #{pid}
+	</select>
+	
+	<select id="selectProductLikePnameWithStock" resultMap="product_stock_Map" parameterType="java.lang.String" >
+		SELECT
+			<include refid="product_stock" />
+		FROM
+			PRODUCT p
+			RIGHT JOIN PRODUCT_SPEC pdesc
+			ON p.PID = pdesc.PID
+			where p.pname like #{pname}
+	</select>
+    <!-- ======================================= 安 END ======================================== -->
+  	
+  	
+</mapper>
